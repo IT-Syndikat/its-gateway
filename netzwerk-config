@@ -1,0 +1,51 @@
+telekom:
+
+enx000ec6c0866d: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.0.4  netmask 255.255.255.0  broadcast 10.0.0.255
+        inet6 fe80::20e:c6ff:fec0:866d  prefixlen 64  scopeid 0x20<link>
+        ether 00:0e:c6:c0:86:6d  txqueuelen 1000  (Ethernet)
+        RX packets 22  bytes 3145 (3.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 90  bytes 14657 (14.3 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+
+upc:
+
+enx000ec6c0866d: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.0.14  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 2a02:8389:2181:fc00:20e:c6ff:fec0:866d  prefixlen 64  scopeid 0x0<global>
+        inet6 fe80::20e:c6ff:fec0:866d  prefixlen 64  scopeid 0x20<link>
+        ether 00:0e:c6:c0:86:6d  txqueuelen 1000  (Ethernet)
+        RX packets 9  bytes 1856 (1.8 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 63  bytes 10900 (10.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+# The primary network interface
+allow-hotplug eth0
+iface eth0 inet static
+        address 192.168.99.5
+        netmask 255.255.255.0
+        broadcast 192.168.99.255
+        post-up route add -net 192.168.0.0/16 gw 192.168.99.1
+        post-up route add -net 172.16.0.0/16 gw 172.16.0.49
+        post-up route add -net 10.0.0.0/8 gw 172.16.0.49
+
+# A1 Internet
+allow-hotplug eth2
+iface eth2 inet static
+        address 10.0.0.137
+        netmask 255.255.255.0
+        broadcast 10.0.0.255
+
+
+# UPC Internet
+allow-hotplug eth4
+iface eth4 inet static
+        address 192.168.0.253
+        netmask 255.255.255.0
+        broadcast 192.168.0.255
+
